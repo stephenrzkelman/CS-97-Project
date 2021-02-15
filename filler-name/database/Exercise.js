@@ -40,6 +40,25 @@ class Exercise {
   }
 
   /**
+   * updates rating of exercise
+   * @param {number} newRating new rating for exercise (1-5)
+   * @returns {Promise<Exercise>} calling instance
+   */
+
+  updateRating(newRating) {
+    const sql = `UPDATE exercises SET rating = ? WHERE id = ?`;
+    return new Promise((resolve, reject) => {
+      db.run(sql, [newRating, this.id], error => {
+        if(error) {
+          console.error(error);
+          reject(error);
+        }
+        resolve(this);
+      });
+    });
+  }
+
+  /**
    * creates new exercise table
    * @returns {Promise<void>} empty promise :(
    */
@@ -51,7 +70,7 @@ class Exercise {
       description TEXT,
       rating REAL,
       creator INTEGER NOT NULL,
-      FOREIGN KEY(creator) REFERENCES user(id)
+      FOREIGN KEY(creator) REFERENCES user(id) ON DELETE CASCADE
     )`;
     return new Promise((resolve, reject) => {
       db.run(sql, error => {

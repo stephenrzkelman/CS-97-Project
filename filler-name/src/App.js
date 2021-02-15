@@ -3,17 +3,19 @@ import './App.css';
 import { useState, useEffect } from 'react';
 
 function App() {
-  const [message, setMessage] = useState([]);
+  const [exercises, setExercises] = useState([]);
 
   useEffect(async () => {
-    const response = fetch('/test')
+    fetch('/exercises')
       .then(rawResponse => rawResponse.json())
-      .then(response => setMessage(response.message))
-      .catch(error => console.error(error));
+      .then(exercises => setExercises(exercises))
+      .catch(error => console.log(error));
   });
 
   return (
-    <>{message.map(item => <h3>{item}</h3>)}</>
+    <>
+      {exercises.map(exercise => <h3>{exercise.name}</h3>)}
+    </>
   );
 }
 

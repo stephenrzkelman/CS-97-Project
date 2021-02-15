@@ -42,8 +42,8 @@ class ExerciseTag {
       id INTEGER PRIMARY KEY,
       exercise_id INTEGER,
       tag_id INTEGER,
-      FOREIGN KEY(exercise_id) REFERENCES exercises(id),
-      FOREIGN KEY(tag_id) REFERENCES tags(id)
+      FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE,
+      FOREIGN KEY(tag_id) REFERENCES tags(id) ON DELETE CASCADE
     )`;
     return new Promise((resolve, reject) => {
       db.run(sql, error => {
