@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+cd filler-name/server && node index.js&
+cd filler-name && npm start;
+
+wait
