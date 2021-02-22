@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

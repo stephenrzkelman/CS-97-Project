@@ -96,12 +96,13 @@ class Exercise {
           console.error(error);
           reject(error);
         }
-        const exercises = rows.map(row => {
-          const exercise = new Exercise(row.name, row.description);
+        const exercises = Promise.all(rows.map(async row => {
+          const { User } = require('./User');
+          const exercise = new Exercise(row.name, row.description, await User.find(row.creator));
           exercise.id = row.id;
           exercise.rating = row.rating;
           return exercise;
-        });
+        }));
         resolve(exercises);
       });
     })
