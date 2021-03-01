@@ -38,9 +38,18 @@ app.post('/auth', async (req, res) => {
   });
 });
 
+app.get('/users/:userId/exercises', async (req, res) => {
+  const { authorization } = req.headers;
+  const { userId } = req.params;
+  if(!authorization) return res.status(401);
+  const userExercises = await (await User.find(Number(userId))).getExercises();
+  return res.json(userExercises);
+});
+
 app.get('/users', async (req, res) => {
-  const user = new User('paulsera1', '#chicken12', 'test@gmail.com');
-  //await user.save();
+  const { authorization } = req.headers;
+  if(req.jwt === 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYXVsc2VyYTEiLCJwYXNzd29yZCI6IiNjaGlja2VuMTIiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjE0NDc2OTM3fQ.F8o2-G0O09mbn7pIv2ptd5sdUdPeMgfDyYVroxjE5eo')
+    return res.send(await User.find(1));
   return res.send(await User.all());
 });
 
@@ -63,8 +72,6 @@ app.get('/exercises/:exerciseId', async (req, res) => {
 
 app.get('/exercises', async (req, res) => {
   const { authorization } = req.headers;
-  console.log(authorization);
-  // todo: process exercises based on user jwt located within 'authorization'
   return res.send(await Exercise.all());
 });
 

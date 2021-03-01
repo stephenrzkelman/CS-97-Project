@@ -3,6 +3,10 @@ import './FeedPost.css';
 import {
     StarRating
 } from '../components';
+import {
+    API,
+    createHeader
+} from '../constants';
 import heart from '../assets/heart.png';
 import bookmark from '../assets/bookmark.png';
 
@@ -18,6 +22,7 @@ function FeedPost(props) {
 
     const incrementLikeCount = () => {
         setLikeCount(likeCount + 1);
+        // call API endpoint to increment like count (there's a database method for it)
     }
 
     return <div className="post">

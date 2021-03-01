@@ -54,10 +54,10 @@ class User {
           reject(error);
         }
         resolve(rows.map(row => {
-          const exercise = new Exercise(row.name, row.description);
-          delete row.creator;
+          const exercise = new Exercise(row.name, row.image, row.muscleGroup, row.type, row.difficulty, row.equipment, row.creator);
+          delete exercise.creator;
           exercise.id = row.id;
-          exercise.rating = row.rating;
+          exercise.likes = row.likes;
           return exercise;
         }));
       });
