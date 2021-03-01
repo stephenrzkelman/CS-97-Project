@@ -38,15 +38,9 @@ app.post('/auth', async (req, res) => {
   });
 });
 
-app.get('/users/:userId/exercises', async (req, res) => {
-  const { userId } = req.params;
-  // const user = await (new User('test', 'testpass', 'test@gmail.com')).save();
-  // const exercise = new Exercise('aaa', 'aaaaaaaaaaaaaa', user);
-  // exercise.save();
-  return res.send(await (await User.find(userId)).getExercises());
-});
-
 app.get('/users', async (req, res) => {
+  const user = new User('paulsera1', '#chicken12', 'test@gmail.com');
+  //await user.save();
   return res.send(await User.all());
 });
 
@@ -68,15 +62,18 @@ app.get('/exercises/:exerciseId', async (req, res) => {
 });
 
 app.get('/exercises', async (req, res) => {
+  const { authorization } = req.headers;
+  console.log(authorization);
+  // todo: process exercises based on user jwt located within 'authorization'
   return res.send(await Exercise.all());
 });
 
-app.post('/exercises', auth, async (req, res) => {
+/* app.post('/exercises', auth, async (req, res) => {
   const { name, description } = req.body;
   let bearer = jwt.verify(req.jwt, JWT_SECRET);
   const exercise = await (new Exercise(name, description, bearer)).save();
   return res.json(exercise);
-});
+}); */
 
 app.get('/tags', async (req, res) => {
   return res.send(await Tag.all());

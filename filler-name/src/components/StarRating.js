@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const starStyle = {
-  fontSize: '50px'
+  fontSize: '30px'
 };
 
 function StarRating(props) {
@@ -12,7 +12,7 @@ function StarRating(props) {
   const setRating = () => {
     const stars = rating.current.getElementsByClassName('star');
     Array.from(stars).forEach(star => {
-      star.style.color = count >= star.dataset.value ? 'yellow' : 'gray'
+      star.style.color = Math.ceil(count) >= star.dataset.value ? 'yellow' : 'gray'
     });
   }
 
