@@ -1,13 +1,11 @@
 import './App.css';
 
-import Navigation from './Navigation';
-import Profile from './Profile';
-import Home from './Components/Home';
-import Calendar from './Calendar';
-import Login from './Login';
-import Logout from './Logout';
-import Workout from './Workout';
-import FeedPost from './Components/FeedPost';
+import {
+  Feed,
+  Profile,
+  Calendar,
+  Navigation
+} from './components';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -25,7 +23,7 @@ function App() {
           <Route path="/calendar" component={Calendar} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
-          <Route path="/feed" component={FeedPost} />
+          <Route path="/feed" component={Feed} />
           <Route path="/workout" component={Workout} />
           </Switch>
       </Router>
