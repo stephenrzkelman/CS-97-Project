@@ -5,15 +5,23 @@ class Exercise {
   /**
    * creates new instance of Exercise
    * @param {string} name name of exercise
-   * @param {string} description description (idk)
+   * @param {string} image image file (from filesystem)
+   * @param {string} muscleGroup muscle group worked
+   * @param {string} type type of the workout
+   * @param {number} difficulty difficulty rating of the workout
+   * @param {string} instructions workout instructions
    * @param {User} creator user which created the exercise
    */
 
-  constructor(name, description, creator) {
+  constructor(name, image, muscleGroup, type, difficulty, equipment, creator) {
     this.id = undefined;
     this.name = name;
-    this.description = description;
-    this.rating = undefined;
+    this.likes = 0;
+    this.image = image;
+    this.muscleGroup = muscleGroup;
+    this.type = type;
+    this.difficulty = difficulty;
+    this.equipment = equipment;
     this.creator = creator;
   }
 
@@ -24,35 +32,36 @@ class Exercise {
 
   save() {
     const that = this;
+    that.image = this.image == null ? 'Gray-Box-2.jpg' : this.image;
     const sql = `INSERT INTO exercises
-      (name, description, rating, creator)
-      VALUES (?, ?, ?, ?)`;
+      (name, likes, image, muscleGroup, type, difficulty, equipment, creator)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     return new Promise((resolve, reject) => {
-      db.run(sql, [this.name, this.description, 0.0, this.creator.id], function(error) {
+      db.run(sql, [this.name, this.likes, that.image, this.muscleGroup, this.type, this.difficulty, this.equipment, this.creator.id], function(error) {
         if(error) {
           console.error(error);
           reject(error);
         }
         that.id = this.lastID;
         resolve(that);
-      })
-    })
+      });
+    });
   }
 
   /**
-   * updates rating of exercise
-   * @param {number} newRating new rating for exercise (1-5)
+   * increments likes of exercise
    * @returns {Promise<Exercise>} calling instance
    */
 
-  updateRating(newRating) {
-    const sql = `UPDATE exercises SET rating = ? WHERE id = ?`;
+  updateRating() {
+    const sql = `UPDATE exercises SET likes = likes + 1 WHERE id = ?`;
     return new Promise((resolve, reject) => {
-      db.run(sql, [newRating, this.id], error => {
+      db.run(sql, [this.id], error => {
         if(error) {
           console.error(error);
           reject(error);
         }
+        this.likes += 1;
         resolve(this);
       });
     });
@@ -67,8 +76,12 @@ class Exercise {
     const sql = `CREATE TABLE IF NOT EXISTS exercises (
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
-      description TEXT,
-      rating REAL,
+      likes INTEGER NOT NULL,
+      image TEXT NOT NULL,
+      muscleGroup TEXT NOT NULL,
+      type TEXT NOT NULL,
+      difficulty REAL,
+      equipment TEXT NOT NULL,
       creator INTEGER NOT NULL,
       FOREIGN KEY(creator) REFERENCES user(id) ON DELETE CASCADE
     )`;
@@ -96,12 +109,22 @@ class Exercise {
           console.error(error);
           reject(error);
         }
-        const exercises = rows.map(row => {
-          const exercise = new Exercise(row.name, row.description);
+        const { User } = require('./User');
+        const exercises = Promise.all(rows.map(async row => {
+          const creator = await User.find(row.creator);
+          const exercise = new Exercise(
+            row.name,
+            row.image,
+            row.muscleGroup,
+            row.type,
+            row.difficulty,
+            row.equipment,
+            creator
+          );
           exercise.id = row.id;
-          exercise.rating = row.rating;
+          exercise.likes = row.likes;
           return exercise;
-        });
+        }));
         resolve(exercises);
       });
     })

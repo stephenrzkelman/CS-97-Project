@@ -1,21 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
 
+import {
+  Feed,
+  Profile,
+  Calendar,
+  Navigation
+} from './components';
+
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
+
+
+//what is shown on the webpage
 function App() {
-  const [exercises, setExercises] = useState([]);
-
-  useEffect(async () => {
-    fetch('/exercises')
-      .then(rawResponse => rawResponse.json())
-      .then(exercises => setExercises(exercises))
-      .catch(error => console.log(error));
-  });
-
   return (
-    <>
-      {exercises.map(exercise => <h3>{exercise.name}</h3>)}
-    </>
+    <div className="App">
+        <Router>
+        <Navigation />
+          <Switch>
+          <Route path="/home" exact component={Home} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/calendar" component={Calendar} />
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/feed" component={Feed} />
+          <Route path="/workout" component={Workout} />
+          </Switch>
+      </Router>
+
+    </div>
   );
 }
 

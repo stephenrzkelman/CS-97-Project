@@ -54,10 +54,10 @@ class User {
           reject(error);
         }
         resolve(rows.map(row => {
-          const exercise = new Exercise(row.name, row.description);
-          delete row.creator;
+          const exercise = new Exercise(row.name, row.image, row.muscleGroup, row.type, row.difficulty, row.equipment, row.creator);
+          delete exercise.creator;
           exercise.id = row.id;
-          exercise.rating = row.rating;
+          exercise.likes = row.likes;
           return exercise;
         }));
       });
@@ -74,8 +74,7 @@ class User {
       id INTEGER PRIMARY KEY,
       username TEXT NOT NULL,
       password TEXT NOT NULL,
-      email TEXT NOT NULL,
-      UNIQUE(username, email)
+      email TEXT NOT NULL UNIQUE
     )`;
     return new Promise((resolve, reject) => {
       db.run(sql, error => {
@@ -108,6 +107,27 @@ class User {
         resolve(user);
       })
     })
+  }
+
+  /**
+   * authenticate by email and password, return user row
+   * @param {string} email
+   * @param {string} password
+   * @returns {Promise<User>}
+   */
+
+  static authenticate(email, password) {
+    const sql = `SELECT * FROM users WHERE
+      email = ? AND password = ?`;
+    return new Promise((resolve, reject) => {
+      db.get(sql, [email, password], function(error, row) {
+        if(error) {
+          console.error(error);
+          reject(error);
+        }
+        return resolve(row);
+      });
+    });
   }
 
   /**
