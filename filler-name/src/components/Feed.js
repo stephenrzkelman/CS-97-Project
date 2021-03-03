@@ -39,7 +39,7 @@ function Feed() {
   useEffect(async () => {
     if(!loading) return;
     setLoading(false);
-    const posts = await API.get('/exercises', createHeader(window.localStorage.getItem('jwt')));
+    const posts = await API.get('/@me/exercises', createHeader(window.localStorage.getItem('jwt')));
     setState(posts.data);
   });
 
@@ -48,9 +48,11 @@ function Feed() {
       {
         state.map(post => {
           return <FeedPost
+            id={post.id}
             name={post.name}
             image={post.image}
             likes={post.likes}
+            liked={post.liked}
             muscleGroup={post.muscleGroup}
             type={post.type}
             equipment={post.equipment}

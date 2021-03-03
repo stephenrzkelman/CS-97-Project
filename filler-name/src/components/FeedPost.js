@@ -13,6 +13,7 @@ import bookmark from '../assets/bookmark.png';
 function FeedPost(props) {
 
     const [likeCount, setLikeCount]= useState(props.likes);
+    const [liked, setLiked] = useState(props.liked);
     const [image, setImage] = useState(null);
 
     useEffect(async () => {
@@ -20,9 +21,11 @@ function FeedPost(props) {
         setImage(bgim);
     });
 
-    const incrementLikeCount = () => {
+    const incrementLikeCount = async () => {
+        if(liked) return;
+        setLiked(true);
         setLikeCount(likeCount + 1);
-        // call API endpoint to increment like count (there's a database method for it)
+        const response = await API.put(`/exercises/${props.id}`, {}, createHeader(window.localStorage.getItem('jwt')));
     }
 
     return <div className="post">

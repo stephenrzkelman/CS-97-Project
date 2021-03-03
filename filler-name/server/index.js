@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const { User, Exercise, Tag, ExerciseTag } = require('../database');
+const { User, Exercise, Tag, ExerciseTag, ExerciseLike } = require('../database');
+
 
 const app = express();
 const port = 3000;
@@ -9,16 +10,17 @@ const JWT_SECRET = 'dtrgyuhijohuttfcghvjbkhvdt';
 
 app.use(bodyParser.json());
 const auth = (req, res, next) => {
-  let data = req.headers.authorization.split(' ');
-  req.jwt = data[1];
+  req.jwt = req.headers.authorization;
   return next();
 };
+app.use(auth);
 
 /* initialize database */
 User.createTable();
 Exercise.createTable();
 Tag.createTable();
 ExerciseTag.createTable();
+ExerciseLike.createTable();
 
 /* most of these endpoints are just for debugging */
 
@@ -38,6 +40,10 @@ app.post('/auth', async (req, res) => {
   });
 });
 
+app.get('/test', async (req, res) => {
+  return res.json(await ExerciseLike.getUserLikes({id: 1}));
+});
+
 app.get('/users/:userId/exercises', async (req, res) => {
   const { authorization } = req.headers;
   const { userId } = req.params;
@@ -46,10 +52,12 @@ app.get('/users/:userId/exercises', async (req, res) => {
   return res.json(userExercises);
 });
 
+app.get('/@me', async (req, res) => {
+  const user = jwt.verify(req.jwt, JWT_SECRET);
+  return res.json(user);
+});
+
 app.get('/users', async (req, res) => {
-  const { authorization } = req.headers;
-  if(req.jwt === 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYXVsc2VyYTEiLCJwYXNzd29yZCI6IiNjaGlja2VuMTIiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjE0NDc2OTM3fQ.F8o2-G0O09mbn7pIv2ptd5sdUdPeMgfDyYVroxjE5eo')
-    return res.send(await User.find(1));
   return res.send(await User.all());
 });
 
@@ -57,7 +65,12 @@ app.post('/users', async (req, res) => {
   const { username, password, email } = req.body;
   const user = new User(username, password, email);
   const resp = await user.save();
-  return res.send(resp);
+  return res.json({token: jwt.sign({
+    id: resp.id,
+    username: resp.username,
+    password: resp.password,
+    email: resp.email
+  }, JWT_SECRET)});
 });
 
 app.get('/users/:userId', async (req, res) => {
@@ -70,9 +83,33 @@ app.get('/exercises/:exerciseId', async (req, res) => {
   return res.send(await Exercise.find(exerciseId));
 });
 
+app.put('/exercises/:exerciseId', async (req, res) => {
+  const { exerciseId } = req.params;
+  const obj = jwt.verify(req.jwt, JWT_SECRET);
+  const user = new User(obj.username, obj.password, obj.email);
+  user.id = obj.id;
+  let exercise = await Exercise.find(exerciseId);
+
+  let execLike = await (new ExerciseLike(exercise, user)).save();
+  return res.json(await exercise.updateRating());
+});
+
 app.get('/exercises', async (req, res) => {
-  const { authorization } = req.headers;
-  return res.send(await Exercise.all());
+  return res.json(await Exercise.all());
+});
+
+app.get('/@me/exercises', async (req, res) => {
+  const obj = jwt.verify(req.jwt, JWT_SECRET)
+  const user = new User(obj.username, obj.password, obj.email);
+  user.id = obj.id;
+  const likedExercises = await ExerciseLike.getUserLikes(user);
+  const allExercises = await Exercise.all();
+  allExercises.forEach(exer => {
+    if(likedExercises.map(elem => elem.id).includes(exer.id))
+      exer.liked = true;
+    else exer.liked = false;
+  });
+  return res.send(allExercises);
 });
 
 /* app.post('/exercises', auth, async (req, res) => {

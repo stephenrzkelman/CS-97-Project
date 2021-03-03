@@ -5,6 +5,9 @@ import FeedPost from './FeedPost';
 import Profile from './Profile';
 import Feed from './Feed';
 import Navigation from './Navigation';
+import Calendar from './Calendar';
+import Logout from './Logout';
+import Signup from './Signup';
 
 export {
   WorkoutCreationForm,
@@ -13,5 +16,8 @@ export {
   FeedPost,
   Profile,
   Feed,
-  Navigation
+  Navigation,
+  Calendar,
+  Logout,
+  Signup
 }

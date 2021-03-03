@@ -1,33 +1,61 @@
-import './App.css';
-
 import {
   Feed,
   Profile,
   Calendar,
-  Navigation
+  Navigation,
+  AuthForm,
+  Logout,
+  Signup
 } from './components';
 
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 
+import {
+  useState
+} from 'react';
 
-
-//what is shown on the webpage
 function App() {
+
+  const [authenticated, authenticate] = useState(Boolean(localStorage.getItem('jwt')));
+
   return (
     <div className="App">
         <Router>
-        <Navigation />
+          <Navigation authenticated={authenticated} />
           <Switch>
-          <Route path="/home" exact component={Home} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/calendar" component={Calendar} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/feed" component={Feed} />
-          <Route path="/workout" component={Workout} />
+            <Route path="/home" exact component="" />
+            <Route
+              path="/profile"
+              render={props => (
+                <Profile {...props} jwt={authenticated ? localStorage.getItem('jwt') : undefined} />
+              )}
+            />
+            <Route path="/calendar" component={Calendar} />
+            <Route
+              path="/login"
+              render={props => (
+                <AuthForm {...props} authenticate={authenticate} />
+              )}
+            />
+            <Route
+              path="/logout"
+              render={props => (
+                <Logout {...props} authenticate={authenticate} />
+              )}
+            />
+            <Route
+              path="/signup"
+              render={props => (
+                <Signup {...props} authenticate={authenticate} />
+              )}
+            />
+            <Route path="/feed" component={Feed} />
           </Switch>
       </Router>
-
     </div>
   );
 }

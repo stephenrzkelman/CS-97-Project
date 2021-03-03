@@ -2,8 +2,7 @@ import {
   useState
 } from 'react';
 import {
-  withRouter,
-  Link
+  withRouter
 } from 'react-router-dom';
 import {
   API,
@@ -11,8 +10,9 @@ import {
 } from '../constants';
 import './AuthForm.css';
 
-function AuthForm(props) {
+function Signup(props) {
   const [state, setState] = useState({
+    username: '',
     email: '',
     password: '',
     error: ''
@@ -30,13 +30,14 @@ function AuthForm(props) {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      const response = await API.post('/auth', state, createHeader(null));
+      const response = await API.post('/users', state, createHeader(null));
       window.localStorage.setItem('jwt', response.data.token);
       props.authenticate(true);
       props.history.push('/home');
     } catch {
       let prevState = state;
       setState({
+        username: prevState.username,
         email: prevState.email,
         password: prevState.password,
         error: 'invalid credentials'
@@ -51,15 +52,16 @@ function AuthForm(props) {
 
   return (
     <form className="authentication-form">
+      <label style={inputStyle} htmlFor="username">Username</label>
+      <input style={inputStyle} type="text" id="username" placeholder="Username" onChange={handleChange} />
       <label style={inputStyle} htmlFor="email">Email</label>
       <input style={inputStyle} type="email" id="email" placeholder="Email" onChange={handleChange} />
       <label style={inputStyle} htmlFor="password">Password</label>
       <input style={inputStyle} type="password" id="password" placeholder="Password" onChange={handleChange} />
       <p style={{color: 'red'}}>{state.error}</p>
-      <p><Link to="/signup">Create Account</Link></p>
-      <input type="submit" value="Log In" onClick={handleSubmit} />
+      <input type="submit" value="Create Account" onClick={handleSubmit} />
     </form>
   );
 }
 
-export default withRouter(AuthForm);
+export default withRouter(Signup);

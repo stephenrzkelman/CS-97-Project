@@ -146,7 +146,14 @@ class Exercise {
         }
         if(!row) return resolve();
         const { User } = require('./User');
-        const exercise = new Exercise(row.name, row.description, await User.find(row.creator));
+        const exercise = new Exercise(
+          row.name,
+          row.image,
+          row.muscleGroup,
+          row.type,
+          row.difficulty,
+          row.equipment,
+          await User.find(row.creator));
         exercise.id = row.id;
         resolve(exercise);
       });
