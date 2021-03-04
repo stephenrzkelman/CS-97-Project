@@ -34,7 +34,12 @@ function App() {
                 <Profile {...props} jwt={authenticated ? localStorage.getItem('jwt') : undefined} />
               )}
             />
-            <Route path="/calendar" component={Calendar} />
+            <Route
+              path="/calendar"
+              render={props => (
+                <Calendar {...props} token={window.localStorage.getItem('jwt')} />
+              )}
+            />
             <Route
               path="/login"
               render={props => (

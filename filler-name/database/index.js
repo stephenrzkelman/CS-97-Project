@@ -1,15 +1,13 @@
 const { db } = require('./db');
 const { User } = require('./User');
 const { Exercise } = require('./Exercise');
-const { Tag } = require('./Tag');
-const { ExerciseTag } = require('./ExerciseTag');
 const { ExerciseLike } = require('./ExerciseLikes');
+const { Event } = require('./Event');
 
 module.exports = {
   ExerciseLike,
-  ExerciseTag,
   Exercise,
+  Event,
   User,
-  Tag,
   db
 }

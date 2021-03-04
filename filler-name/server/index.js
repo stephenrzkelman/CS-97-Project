@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const { User, Exercise, Tag, ExerciseTag, ExerciseLike } = require('../database');
-
+const { db, User, Exercise, ExerciseLike, Event } = require('../database');
 
 const app = express();
 const port = 3000;
@@ -18,9 +17,8 @@ app.use(auth);
 /* initialize database */
 User.createTable();
 Exercise.createTable();
-Tag.createTable();
-ExerciseTag.createTable();
 ExerciseLike.createTable();
+Event.createTable();
 
 /* most of these endpoints are just for debugging */
 
@@ -55,6 +53,21 @@ app.get('/users/:userId/exercises', async (req, res) => {
 app.get('/@me', async (req, res) => {
   const user = jwt.verify(req.jwt, JWT_SECRET);
   return res.json(user);
+});
+
+app.get('/@me/events', async (req, res) => {
+  const user = jwt.verify(req.jwt, JWT_SECRET);
+  return res.json(await Event.getUserEvents(user));
+});
+
+app.post('/events', async (req, res) => {
+  const user = jwt.verify(req.jwt, JWT_SECRET);
+  const event = await (new Event(req.body.id, req.body.title, req.body.start, user)).save();
+  return res.json({message: 'ok'});
+});
+
+app.get('/events', async (req, res) => {
+  return res.json(await Event.all());
 });
 
 app.get('/users', async (req, res) => {
@@ -118,14 +131,5 @@ app.get('/@me/exercises', async (req, res) => {
   const exercise = await (new Exercise(name, description, bearer)).save();
   return res.json(exercise);
 }); */
-
-app.get('/tags', async (req, res) => {
-  return res.send(await Tag.all());
-});
-
-app.get('/tags/:tagId', async (req, res) => {
-  const { tagId } = req.params;
-  return res.send(await Tag.find(tagId));
-});
 
 app.listen(port, () => console.log('ready'));

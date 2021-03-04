@@ -3,14 +3,33 @@ import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from './event-utils'
+import {
+  createEventId
+} from './event-utils'
+import {
+  API,
+  createHeader
+} from '../constants';
 import './Calendar.css'
 
 export default class Calendar extends React.Component {
 
-  state = {
-    weekendsVisible: true,
-    currentEvents: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      weekendsVisible: true,
+      events: []
+    };
+  }
+
+  componentDidMount() {
+    API.get('/@me/events', createHeader(this.props.token))
+      .then(response => {
+        this.setState({
+          events: response.data
+        })
+      })
+      .catch(error => console.error(error));
   }
 
   render() {
@@ -30,12 +49,11 @@ export default class Calendar extends React.Component {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            events={this.state.events} // alternatively, use the `events` setting to fetch from a feed
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
             eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-
           />
         </div>
       </div>
@@ -59,7 +77,7 @@ export default class Calendar extends React.Component {
     )
   }
 
-  handleDateSelect = (selectInfo) => {
+  handleDateSelect = async (selectInfo) => {
     let title = prompt('Please enter a new title for your event')
     let calendarApi = selectInfo.view.calendar
 
@@ -72,7 +90,13 @@ export default class Calendar extends React.Component {
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay
-      })
+      });
+      const token = window.localStorage.getItem('jwt');
+      await API.post('/events', {
+        id: createEventId(),
+        title: title,
+        start: selectInfo.startStr,
+      }, createHeader(token));
     }
   }
 
