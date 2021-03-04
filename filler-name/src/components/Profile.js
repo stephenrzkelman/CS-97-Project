@@ -37,6 +37,7 @@ function Profile(props) {
           key={exercise.id}
           id={exercise.id}
           likes={exercise.likes}
+          likeable={false}
           name={exercise.name}
           difficulty={exercise.difficulty}
           image={exercise.image}

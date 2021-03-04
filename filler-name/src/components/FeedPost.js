@@ -22,7 +22,7 @@ function FeedPost(props) {
     });
 
     const incrementLikeCount = async () => {
-        if(liked) return;
+        if(liked || !props.likeable) return;
         setLiked(true);
         setLikeCount(likeCount + 1);
         const response = await API.put(`/exercises/${props.id}`, {}, createHeader(window.localStorage.getItem('jwt')));

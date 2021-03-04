@@ -53,6 +53,7 @@ function Feed() {
             image={post.image}
             likes={post.likes}
             liked={post.liked}
+            likeable={true}
             muscleGroup={post.muscleGroup}
             type={post.type}
             equipment={post.equipment}
