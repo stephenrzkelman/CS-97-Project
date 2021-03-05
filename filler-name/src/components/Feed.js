@@ -10,7 +10,7 @@ import {
   API,
   createHeader
 } from '../constants';
-
+import SearchBar from './SearchBar';
 /* const postInfo = [
 {
   accountName: 'Filler',
@@ -34,7 +34,7 @@ import {
 function Feed() {
 
   const [state, setState] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     if(!loading) return;
@@ -44,6 +44,8 @@ function Feed() {
   });
 
   return (
+	  <div>
+	  <SearchBar/>
     <div className="App">
       {
         state.map(post => {
@@ -62,6 +64,7 @@ function Feed() {
         })
       }
     </div>
+	  </div>
   );
 }
 
