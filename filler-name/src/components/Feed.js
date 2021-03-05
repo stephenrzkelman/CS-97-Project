@@ -34,7 +34,7 @@ import SearchBar from './SearchBar';
 function Feed() {
 
   const [state, setState] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     if(!loading) return;
@@ -44,8 +44,8 @@ function Feed() {
   });
 
   return (
-	  <div>
-	  <SearchBar/>
+	 <div>
+	 <SearchBar/>
     <div className="App">
       {
         state.map(post => {
@@ -64,7 +64,7 @@ function Feed() {
         })
       }
     </div>
-	  </div>
+	 </div>
   );
 }
 

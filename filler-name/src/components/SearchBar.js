@@ -18,6 +18,7 @@ class SearchBar extends React.Component {
 
 	handleSearch(event){
 		alert(this.state.value);
+		return this.state.value;
 	}
 
 	render(){
