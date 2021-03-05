@@ -115,13 +115,7 @@ app.get('/@me/exercises', async (req, res) => {
   const obj = jwt.verify(req.jwt, JWT_SECRET)
   const user = new User(obj.username, obj.password, obj.email);
   user.id = obj.id;
-  const likedExercises = await ExerciseLike.getUserLikes(user);
-  const allExercises = await Exercise.all();
-  allExercises.forEach(exer => {
-    if(likedExercises.map(elem => elem.id).includes(exer.id))
-      exer.liked = true;
-    else exer.liked = false;
-  });
+  const allExercises = await ExerciseLike.getUserFeed(user);
   return res.send(allExercises);
 });
 

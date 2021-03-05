@@ -16,7 +16,7 @@ class ExerciseLike {
    */
 
   constructor(exercise, user) {
-    this.id = undefined;
+    this.row_id = undefined;
     this.exercise = exercise;
     this.user = user;
   }
@@ -32,7 +32,7 @@ class ExerciseLike {
           console.error(error);
           reject(error);
         }
-        that.id = this.lastID;
+        that.row_id = this.lastID;
         resolve(that);
       });
     });
@@ -40,7 +40,7 @@ class ExerciseLike {
 
   static createTable() {
     const sql = `CREATE TABLE IF NOT EXISTS exercise_like (
-      id INTEGER PRIMARY KEY,
+      row_id INTEGER PRIMARY KEY,
       exercise_id INTEGER,
       user_id INTEGER,
       FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE,
@@ -69,7 +69,7 @@ class ExerciseLike {
           const exercise = await Exercise.find(row.exercise_id);
           const user = await User.find(row.user_id);
           const exercise_like = new ExerciseLike(exercise, user);
-          exercise_like.id = row.id;
+          exercise_like.row_id = row.row_id;
           return exercise_like;
         }));
         resolve(exercise_likes);
@@ -106,22 +106,26 @@ class ExerciseLike {
 
   /**
    * #### exists here to avoid more circular dependency
-   * gets all liked exercises for a given user
+   * gets all exercises for a given user including whether liked
    * @param {User} user must include id
    * @returns {Promise<Exercise[]}
    */
 
-  static getUserLikes(user) {
-    const sql = `SELECT * FROM exercise_like
-      JOIN exercises ON exercise_like.exercise_id = exercises.id
-      WHERE user_id = ?`;
+  static getUserFeed(user) {
+    const sql = `SELECT * FROM exercises
+      LEFT JOIN exercise_like ON exercise_like.exercise_id = exercises.id
+      AND user_id = ?`;
     return new Promise((resolve, reject) => {
       db.all(sql, [user.id], (error, rows) => {
         if(error) {
           console.error(error);
           reject(error);
         }
-        resolve(Promise.all(rows.map(async row => await Exercise.find(row.id))));
+        resolve(Promise.all(rows.map(async row => {
+          const exercise = await Exercise.find(row.id);
+          exercise.liked = Boolean(row.exercise_id);
+          return exercise;
+        })));
       });
     });
   }
