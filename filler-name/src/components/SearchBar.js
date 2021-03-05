@@ -1,5 +1,5 @@
 import React from 'react';
-import Exercise from '../../database/Exercise.js';
+//import Exercise from '../../database/Exercise.js';
 
 class SearchBar extends React.Component {
 	constructor(props){
@@ -9,7 +9,7 @@ class SearchBar extends React.Component {
 		this. handleChange = 
 			this.handleChange.bind(this);
 		this.handleSearch = 
-			this.handleSubmit.bind(this);
+			this.handleSearch.bind(this);
 	}
 
 	handleChange(event){
@@ -17,7 +17,7 @@ class SearchBar extends React.Component {
 	}
 
 	handleSearch(event){
-		return Exercise.search(this.state.value);
+		alert(this.state.value);
 	}
 
 	render(){
