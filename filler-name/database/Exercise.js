@@ -191,9 +191,9 @@ class Exercise {
           return exercise;
         }));
         resolve(exercises);
-      }
-    });
-  })
+      });
+    })
+  }
 }
 
 exports.Exercise = Exercise;

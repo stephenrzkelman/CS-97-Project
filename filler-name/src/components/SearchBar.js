@@ -5,8 +5,7 @@ class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {value: ''};
-
-		this. handleChange = 
+		this.handleChange = 
 			this.handleChange.bind(this);
 		this.handleSearch = 
 			this.handleSearch.bind(this);
@@ -17,7 +16,7 @@ class SearchBar extends React.Component {
 	}
 
 	handleSearch(event){
-		alert(this.state.value);
+		this.props.submissionCall(this.state.value);
 		return this.state.value;
 	}
 
