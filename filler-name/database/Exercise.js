@@ -196,7 +196,9 @@ class Exercise {
         }));
         resolve(exercises);
       });
+
     });
+
   }
 }
 

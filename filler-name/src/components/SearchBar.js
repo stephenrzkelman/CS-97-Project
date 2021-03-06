@@ -4,18 +4,22 @@ import {
 	createHeader
 } from '../constants';
 
+
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {value: ''};
 
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
+
 	}
 
 	handleChange(event){
 		this.setState({value: event.target.value});
 	}
+
 
 	async handleSearch(event) {
 		event.preventDefault();
@@ -23,6 +27,7 @@ class SearchBar extends React.Component {
 			keyword: this.state.value
 		}, createHeader(window.localStorage.getItem('jwt')));
 		this.props.displayResult(data);
+
 	}
 
 	render(){
