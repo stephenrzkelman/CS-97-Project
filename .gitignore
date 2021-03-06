@@ -1,1 +1,4 @@
 db.sqlite3
+filler-name/node_modules/.bin
+filler-name/node_modules/.cache
+filler-name/node_modules/.cache/.eslintcache
