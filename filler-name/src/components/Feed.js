@@ -33,7 +33,10 @@ import SearchBar from './SearchBar';
 //what is shown on the webpage
 function Feed (){
   const [state, setState] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(false);
+  const [searchResults, setResults] = useState([]);
+
 
   useEffect(async () => {
     if(!loading) return;
@@ -41,16 +44,21 @@ function Feed (){
     const posts = await API.get('/@me/exercises', createHeader(window.localStorage.getItem('jwt')));
     setState(posts.data);
   });
-  
-  const testResponse = query =>(async () => {
-	  console.log(query);
-	  const posts = await API.get('/@me/exercises', createHeader(window.localStorage.getItem('jwt')));
-	  setState(posts.data);
-  });
-  
+
+
+  const displayResult = data => {
+    setResults(data);
+  }
+
   return (
-   <div>
-    <SearchBar submissionCall={testResponse} />
+	  <div>
+	  <SearchBar displayResult={displayResult}/>
+    {searchResults.map(result => (
+      <div key={result.id}>
+        <h1>{result.name}</h1>
+      </div>
+    ))}
+
     <div className="App">
       {
         state.map(post => {
