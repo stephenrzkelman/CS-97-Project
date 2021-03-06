@@ -35,6 +35,7 @@ function Feed() {
 
   const [state, setState] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchResults, setResults] = useState([]);
 
   useEffect(async () => {
     if(!loading) return;
@@ -43,9 +44,18 @@ function Feed() {
     setState(posts.data);
   });
 
+  const displayResult = data => {
+    setResults(data);
+  }
+
   return (
 	  <div>
-	  <SearchBar/>
+	  <SearchBar displayResult={displayResult}/>
+    {searchResults.map(result => (
+      <div key={result.id}>
+        <h1>{result.name}</h1>
+      </div>
+    ))}
     <div className="App">
       {
         state.map(post => {

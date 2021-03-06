@@ -1,28 +1,33 @@
 import React from 'react';
-import Exercise from '../../database/Exercise.js';
+import {
+	API,
+	createHeader
+} from '../constants';
 
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {value: ''};
 
-		this. handleChange = 
-			this.handleChange.bind(this);
-		this.handleSearch = 
-			this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	handleChange(event){
 		this.setState({value: event.target.value});
 	}
 
-	handleSearch(event){
-		return Exercise.search(this.state.value);
+	async handleSearch(event) {
+		event.preventDefault();
+		const { data } = await API.post('/search', {
+			keyword: this.state.value
+		}, createHeader(window.localStorage.getItem('jwt')));
+		this.props.displayResult(data);
 	}
 
 	render(){
 		return(
-			<form onSubmit = 
+			<form onSubmit =
 			{this.handleSearch}>
 			<label>
 			Search:

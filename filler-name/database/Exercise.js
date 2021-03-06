@@ -166,9 +166,13 @@ class Exercise {
     });
   }
   static search(query) {
-    const sql = `SELECT * FROM exercises WHERE musclegroup LIKE '%'||?||'%' COLLATE NOCASE`;
+    const sql = `SELECT * FROM exercises
+      WHERE name LIKE ? COLLATE NOCASE OR
+            musclegroup LIKE ? COLLATE NOCASE OR
+            type LIKE ? COLLATE NOCASE OR
+            equipment LIKE ? COLLATE NOCASE`;
     return new Promise((resolve, reject) => {
-      db.all(sql, (error, rows) => {
+      db.all(sql, Array(4).fill(query), (error, rows) => {
       if(error) {
           console.error(error);
           reject(error);
@@ -191,9 +195,9 @@ class Exercise {
           return exercise;
         }));
         resolve(exercises);
-      }
+      });
     });
-  })
+  }
 }
 
 exports.Exercise = Exercise;
