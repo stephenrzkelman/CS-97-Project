@@ -5,7 +5,8 @@ import {
   Navigation,
   AuthForm,
   Logout,
-  Signup
+  Signup,
+  HomePage
 } from './components';
 
 import {
@@ -27,7 +28,12 @@ function App() {
         <Router>
           <Navigation authenticated={authenticated} />
           <Switch>
-            <Route path="/home" exact component="" />
+            <Route
+              exact path="/home"
+              render={props => (
+                <HomePage {...props} authenticated={authenticated} />
+              )}
+            />
             <Route
               path="/profile"
               render={props => (

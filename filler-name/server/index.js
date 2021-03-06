@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const formidable = require('formidable');
+const path = require('path');
+const uuid = require('uuid').v4;
+const fs = require('fs');
 const { db, User, Exercise, ExerciseLike, Event } = require('../database');
 
 const app = express();
@@ -42,7 +46,7 @@ app.get('/test', async (req, res) => {
   return res.json(await ExerciseLike.getUserLikes({id: 1}));
 });
 
-app.post('/search', async (req, res) => {
+app.post('/search', bodyParser.json(), async (req, res) => {
   return res.json(await Exercise.search(req.body.keyword));
 });
 
@@ -123,11 +127,27 @@ app.get('/@me/exercises', async (req, res) => {
   return res.send(allExercises);
 });
 
-/* app.post('/exercises', auth, async (req, res) => {
-  const { name, description } = req.body;
-  let bearer = jwt.verify(req.jwt, JWT_SECRET);
-  const exercise = await (new Exercise(name, description, bearer)).save();
-  return res.json(exercise);
-}); */
+app.post('/upload', async (req, res) => {
+  const form = new formidable.IncomingForm();
+  form.parse(req, async (err, fields, files) => {
+    const newname = uuid() + '.' + files.image.name.split('.')[1]
+    const exercise = new Exercise(
+      fields.name,
+      newname,
+      fields.muscleGroup,
+      fields.type,
+      fields.difficulty,
+      fields.equipment,
+      jwt.verify(req.jwt, JWT_SECRET)
+    );
+    await exercise.save();
+    let oldpath = files.image.path;
+    let newpath = `${path.join(__dirname, '../src/assets')}/${newname}`;
+    let rawdata = fs.readFileSync(oldpath);
+    fs.writeFile(newpath, rawdata, err => {
+      if(err) console.error(err);
+    });
+  });
+});
 
 app.listen(port, () => console.log('ready'));
