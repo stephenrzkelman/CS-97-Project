@@ -8,6 +8,7 @@ import Navigation from './Navigation';
 import Calendar from './Calendar';
 import Logout from './Logout';
 import Signup from './Signup';
+import HomePage from './HomePage';
 
 export {
   WorkoutCreationForm,
@@ -15,6 +16,7 @@ export {
   StarRating,
   FeedPost,
   Profile,
+  HomePage,
   Feed,
   Navigation,
   Calendar,
