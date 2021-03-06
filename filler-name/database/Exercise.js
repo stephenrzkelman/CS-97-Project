@@ -172,7 +172,7 @@ class Exercise {
             type LIKE ? COLLATE NOCASE OR
             equipment LIKE ? COLLATE NOCASE`;
     return new Promise((resolve, reject) => {
-      db.all(sql, Array(4).fill(query), (error, rows) => {
+      db.all(sql, Array(4).fill(`%${query}%`), (error, rows) => {
       if(error) {
           console.error(error);
           reject(error);
