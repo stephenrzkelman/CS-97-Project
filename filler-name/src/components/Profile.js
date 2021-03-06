@@ -7,7 +7,7 @@ import {
   createHeader
 } from '../constants';
 import {
-  FeedPost
+  FeedPost,
 } from '../components';
 
 function Profile(props) {

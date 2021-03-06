@@ -34,7 +34,7 @@ import SearchBar from './SearchBar';
 function Feed (){
   const [state, setState] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchResults, setResults] = useState([]);
 
 
