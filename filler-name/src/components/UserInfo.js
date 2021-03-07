@@ -14,9 +14,9 @@ function UserInfo(props) {
 		props.displayResult(data);
 	}
 
-    return <button className="post" onClick={handleClick}>
+    return <div className="post" onClick={handleClick}>
             <strong>{props.name}</strong>
-    </button>
+    </div>
 }
 
 export default UserInfo;
