@@ -11,7 +11,7 @@ function UserInfo(props) {
 		const { data } = await API.post('/user/exercises', {
 			keyword: props.id
 		}, createHeader(window.localStorage.getItem('jwt')));
-		props.displayResult(data);
+		props.displayResult(data, false);
 	}
 
     return <div className="post" onClick={handleClick}>

@@ -11,6 +11,7 @@ import {
   createHeader
 } from '../constants';
 import ExploreBar from './ExploreBar';
+import FeedPost from './FeedPost';
 
 function Explore (){
   const [state, setState] = useState([]);
@@ -26,23 +27,53 @@ function Explore (){
     setState(posts.data);
   });
 
-  const displayResult = data => {
+  const displayResult = (data, usertf) => {
     setState(data);
+    setUsers(usertf);
   }
-
+if(users){
+          return(
+	     <div>
+    		<ExploreBar displayResult={displayResult}/>
+	        <div className="App">
+		{
+		   state.map(post => {
+		   return <UserInfo 
+			   displayResult={displayResult} 
+			   id={post.id} 
+			   name={post.username}
+		  />
+                  })
+		}
+		</div>
+	     </div>
+	  );
+}else{
   return (
-  <div>
-    <ExploreBar displayResult={displayResult}/>
+	  <div>
+    		<ExploreBar displayResult={displayResult}/>
 
-    <div className="App">
-    {
-        state.map(post => {
-          return <UserInfo displayResult={displayResult} id={post.id} name={post.username}/>
-        })
-    }
+		<div className="App">
+    		{
+     		state.map(post => {
+		    return <FeedPost
+		    id={post.id}
+          	    name={post.name}
+	            image={post.image}
+	            likes={post.likes}
+	            liked={post.liked}
+	            likeable={true}
+	            muscleGroup={post.muscleGroup}
+	            type={post.type}
+	            equipment={post.equipment}
+	            difficulty={post.difficulty}
+	            />
+	    	})
+    	  }
     </div>
   </div>
   );
+ }
 }
 
 export default Explore;

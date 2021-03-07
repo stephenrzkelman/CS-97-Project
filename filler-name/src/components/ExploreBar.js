@@ -26,8 +26,7 @@ class ExploreBar extends React.Component {
 		const { data } = await API.post('/explore', {
 			keyword: this.state.value
 		}, createHeader(window.localStorage.getItem('jwt')));
-		this.props.displayResult(data);
-
+		this.props.displayResult(data, true);
 	}
 
   render(){

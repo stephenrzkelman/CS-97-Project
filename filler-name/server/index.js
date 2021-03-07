@@ -62,7 +62,8 @@ app.get('/users/:userId/exercises', async (req, res) => {
   const { authorization } = req.headers;
   const { userId } = req.params;
   if(!authorization) return res.status(401);
-  const userExercises = await (await User.find(Number(userId))).getExercises();
+  const user = await(User.find(Number(userId)));
+  const userExercises = await user.getExercises();
   return res.json(userExercises);
 });
 
