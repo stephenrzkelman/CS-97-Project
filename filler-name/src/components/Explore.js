@@ -30,12 +30,6 @@ function Explore (){
     setState(data);
   }
 
-  // TODO: write a method, here or in UserInfo,
-  // that will detect a click on a UserInfo component
-  // and modify the content of this page so that users=false
-  // and it shows all the posts of the selected user (using the id component)
-  // rather than a list of all users/ a list of all users matching the search query
-
   return (
   <div>
     <ExploreBar displayResult={displayResult}/>
