@@ -28,10 +28,17 @@ function Explore (){
   });
 
   const displayResult = (data, usertf) => {
-    setState(data);
+    setLoading(true);
     setUsers(usertf);
+    setState(data);
+    setLoading(false);
   }
-if(users){
+if(loading){console.log("loading");
+	return(<div>
+    		<ExploreBar displayResult={displayResult}/>
+	        </div>);
+}else{
+if(users){console.log("users");
           return(
 	     <div>
     		<ExploreBar displayResult={displayResult}/>
@@ -48,7 +55,7 @@ if(users){
 		</div>
 	     </div>
 	  );
-}else{
+}else{console.log("workouts");
   return (
 	  <div>
     		<ExploreBar displayResult={displayResult}/>
@@ -74,6 +81,7 @@ if(users){
   </div>
   );
  }
+}
 }
 
 export default Explore;
