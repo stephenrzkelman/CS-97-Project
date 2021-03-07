@@ -20,12 +20,12 @@ function Explore (){
   // user's workouts
   const [loading, setLoading] = useState(true);
 
-	{/*useEffect(async () => {
+    useEffect(async () => {
     if(!loading) return;
     setLoading(false);
     const posts = await API.get('/users', createHeader(window.localStorage.getItem('jwt')));
     setState(posts.data);
-  });*/}
+  }, []);
 
   const displayResult = (data, usertf) => {
      setLoading(true);
@@ -42,7 +42,8 @@ if(users){console.log("users");
           return(
 	     <div>
     		<ExploreBar displayResult={displayResult}/>
-	        <div className="App">
+	        <p>Select a user to view their workouts: </p>
+		<div className="App">
 		{
 		   state.map(post => {
 		   return <UserInfo 
