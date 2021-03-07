@@ -200,6 +200,38 @@ class Exercise {
     });
 
   }
+  static userall(email) {
+    const sql = `SELECT * FROM (exercises e JOIN users u on e.creator = u.id)
+      WHERE u.email = ? COLLATE NOCASE`;
+    return new Promise((resolve, reject) => {
+      db.all(sql, [email], (error, rows) => {
+      if(error) {
+          console.error(error);
+          reject(error);
+        }
+        const { User } = require('./User');
+        const exercises = Promise.all(rows.map(async row => {
+          const creator = await User.find(row.creator);
+          const exercise = new Exercise(
+            row.name,
+            row.image,
+            row.muscleGroup,
+            row.type,
+            row.difficulty,
+            row.equipment,
+            creator
+          );
+          exercise.id = row.id;
+          exercise.likes = row.likes;
+          exercise.date = new Date(row.date);
+          return exercise;
+        }));
+        resolve(exercises);
+      });
+
+    });
+
+  }
 }
 
 exports.Exercise = Exercise;

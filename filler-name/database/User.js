@@ -152,6 +152,32 @@ class User {
       });
     });
   }
+
+ static search(query) {
+    const sql = `SELECT * FROM users
+      WHERE username LIKE ? COLLATE NOCASE`;
+    return new Promise((resolve, reject) => {
+      db.all(sql, [`%${query}%`], (error, rows) => {
+      if(error) {
+          console.error(error);
+          reject(error);
+        }
+        const { User } = require('./User');
+        const users = Promise.all(rows.map(async row => {
+          const user = new User(
+            row.username,
+	    row.password,
+	    row.email
+          );
+          user.id = row.id;
+          return user;
+        }));
+        resolve(users);
+      });
+
+    });
+
+  }
 }
 
 exports.User = User;

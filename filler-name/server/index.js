@@ -50,6 +50,10 @@ app.post('/search', bodyParser.json(), async (req, res) => {
   return res.json(await Exercise.search(req.body.keyword));
 });
 
+app.post('/explore', bodyParser.json(), async(req,res) => {
+	return res.json(await User.search(req.body.keyword));
+});
+
 app.get('/users/:userId/exercises', async (req, res) => {
   const { authorization } = req.headers;
   const { userId } = req.params;
