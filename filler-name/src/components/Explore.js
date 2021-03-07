@@ -20,18 +20,18 @@ function Explore (){
   // user's workouts
   const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
+	{/*useEffect(async () => {
     if(!loading) return;
     setLoading(false);
     const posts = await API.get('/users', createHeader(window.localStorage.getItem('jwt')));
     setState(posts.data);
-  });
+  });*/}
 
   const displayResult = (data, usertf) => {
-    setLoading(true);
-    setUsers(usertf);
-    setState(data);
-    setLoading(false);
+     setLoading(true);
+     setState(data);
+     setUsers(usertf);
+     setLoading(false);
   }
 if(loading){console.log("loading");
 	return(<div>

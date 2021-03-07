@@ -201,8 +201,8 @@ class Exercise {
 
   }
   static userall(id) {
-    const sql = `SELECT * FROM (exercises e JOIN users u on e.creator = u.id)
-      WHERE u.id = ? COLLATE NOCASE`;
+    const sql = `SELECT * FROM exercises
+      WHERE creator = ?`;
     return new Promise((resolve, reject) => {
       db.all(sql, [id], (error, rows) => {
       if(error) {
