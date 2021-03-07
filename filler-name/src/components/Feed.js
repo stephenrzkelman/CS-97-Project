@@ -11,29 +11,38 @@ import {
   createHeader
 } from '../constants';
 import SearchBar from './SearchBar';
-/* const postInfo = [
+ 
+//temporary
+/*
+import curl2 from '../assets/curl2.jpg'
+import BackgroundImage from '../assets/gray.jpg'
+
+const postInfo = [
 {
-  accountName: 'Filler',
+  name: 'Filler',
   image: BackgroundImage,
+  image2: BackgroundImage,
   muscleGroup: 'Empty',
   type: 'Empty',
-  equiptment: 'Empty',
+  equipment: 'Empty',
   diffuculty: 'Empty',
 },
 {
-  accountName: 'Dumbell Hammer Curls',
+  name: 'Dumbell Hammer Curls',
   image: curl2,
+  image2: BackgroundImage,
   muscleGroup: 'Bicpes',
   type: 'Strength',
-  equiptment: 'Bumbells',
+  equipment: 'Dumbells',
   diffuculty: 'Beginner',
+  directions: 'aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 }
-] */
+] 
+*/
 
 //what is shown on the webpage
 function Feed (){
   const [state, setState] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [searchResults, setResults] = useState([]);
 
@@ -66,6 +75,7 @@ function Feed (){
             id={post.id}
             name={post.name}
             image={post.image}
+            image2={post.image2}
             likes={post.likes}
             liked={post.liked}
             likeable={true}
@@ -73,6 +83,7 @@ function Feed (){
             type={post.type}
             equipment={post.equipment}
             difficulty={post.difficulty}
+            directions={post.directions}
             />
         })
       }
