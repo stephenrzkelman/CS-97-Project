@@ -6,17 +6,17 @@ import {
 } from '../constants';
 
 function UserInfo(props) {
-    return <div className="post">
-        <div className="account-line">
-            <strong>{props.name}</strong>
-        </div>
+   const handleClick = async event => {
+		event.preventDefault();
+		const { data } = await API.post('/user/exercises', {
+			keyword: props.id
+		}, createHeader(window.localStorage.getItem('jwt')));
+		props.displayResult(data);
+	}
 
-        <div className="username">
-            <div><strong>User: </strong>
-                {props.name}
-            </div>
-        </div>
-    </div>
+    return <button className="post" onClick={handleClick}>
+            <strong>{props.name}</strong>
+    </button>
 }
 
 export default UserInfo;

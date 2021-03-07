@@ -27,7 +27,6 @@ class SearchBar extends React.Component {
 			keyword: this.state.value
 		}, createHeader(window.localStorage.getItem('jwt')));
 		this.props.displayResult(data);
-
 	}
 
 	render(){

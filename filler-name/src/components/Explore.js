@@ -43,7 +43,7 @@ function Explore (){
     <div className="App">
     {
         state.map(post => {
-          return <UserInfo id={post.id} name={post.username}/>
+          return <UserInfo displayResult={displayResult} id={post.id} name={post.username}/>
         })
     }
     </div>
