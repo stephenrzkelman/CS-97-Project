@@ -1,13 +1,15 @@
 import {
   WorkoutCreationForm
 } from '.';
+import Feed from './Feed';
 
 function HomePage(props) {
   return (
     <>
       <h1>Home Page</h1>
       {props.authenticated &&
-        <WorkoutCreationForm jwt={window.localStorage.getItem('jwt')} />
+	      <Feed/>
+        //<WorkoutCreationForm jwt={window.localStorage.getItem('jwt')} />
       }
     </>
   );

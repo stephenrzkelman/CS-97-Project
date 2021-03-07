@@ -200,11 +200,11 @@ class Exercise {
     });
 
   }
-  static userall(email) {
+  static userall(id) {
     const sql = `SELECT * FROM (exercises e JOIN users u on e.creator = u.id)
-      WHERE u.email = ? COLLATE NOCASE`;
+      WHERE u.id = ? COLLATE NOCASE`;
     return new Promise((resolve, reject) => {
-      db.all(sql, [email], (error, rows) => {
+      db.all(sql, [id], (error, rows) => {
       if(error) {
           console.error(error);
           reject(error);

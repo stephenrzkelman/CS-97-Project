@@ -1,4 +1,7 @@
 import {
+  WorkoutCreationForm
+} from '.';
+import {
   useState,
   useEffect
 } from 'react';
@@ -31,7 +34,10 @@ function Profile(props) {
 
   return state.user != null ?
     <>
-      <h1>welcome {state.user.username}</h1>
+      <h1>Welcome {state.user.username}</h1>
+      <p> Create a new exercise:</p>
+      <WorkoutCreationForm jwt={window.localStorage.getItem('jwt')} />
+      <p> Your exercises: </p>
       {state.exercises.map(exercise => (
         <FeedPost
           key={exercise.id}

@@ -23,7 +23,7 @@ class SearchBar extends React.Component {
 
 	async handleSearch(event) {
 		event.preventDefault();
-		const { data } = await API.post('/search', {
+		const { data } = await API.post('/explore', {
 			keyword: this.state.value
 		}, createHeader(window.localStorage.getItem('jwt')));
 		this.props.displayResult(data);
@@ -45,5 +45,5 @@ class SearchBar extends React.Component {
 		);
 	}
 }
-// use Exercise.search(query) to find by tag/id
+
 export default SearchBar;
