@@ -1,5 +1,5 @@
 import {
-  Feed,
+  Explore,
   Profile,
   Calendar,
   Navigation,
@@ -64,7 +64,7 @@ function App() {
                 <Signup {...props} authenticate={authenticate} />
               )}
             />
-            <Route path="/feed" component={Feed} />
+            <Route path="/explore" component={Explore} />
           </Switch>
       </Router>
     </div>

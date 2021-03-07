@@ -5,7 +5,7 @@ import {
 } from '../constants';
 
 
-class SearchBar extends React.Component {
+class ExploreBar extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {value: ''};
@@ -30,20 +30,20 @@ class SearchBar extends React.Component {
 
 	}
 
-	render(){
-		return(
-			<form onSubmit =
-			{this.handleSearch}>
-			<label>
-			Search:
-			<input type="text" value = {this.state.value} onChange=
-			{this.handleChange} />
-			</label>
-			<input type="submit"
-			value="Search" />
-			</form>
-		);
-	}
+  render(){
+    return(
+     <form onSubmit =
+      {this.handleSearch}>
+      <label>
+        Search:
+	<input type="text" value = {this.state.value} onChange=
+	  {this.handleChange} />
+      </label>
+      <input type="submit"
+	value="Search" />
+     </form>
+    );
+  }
 }
 
-export default SearchBar;
+export default ExploreBar;

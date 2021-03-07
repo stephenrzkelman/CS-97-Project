@@ -10,8 +10,8 @@ function Navigation(props) {
                     <li>Home</li>
                 </Link>
                 {props.authenticated && <>
-                <Link to= '/feed'>
-                    <li>Feed</li>
+                <Link to= '/explore'>
+                    <li>Explore</li>
                 </Link>
                 <Link to= '/calendar'>
                     <li>Calendar</li>

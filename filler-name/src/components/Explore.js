@@ -4,81 +4,51 @@ import {
   useEffect
 } from 'react';
 import {
-  FeedPost
+  UserInfo
 } from '.';
 import {
   API,
   createHeader
 } from '../constants';
 import ExploreBar from './ExploreBar';
-/* const postInfo = [
-{
-  accountName: 'Filler',
-  image: BackgroundImage,
-  muscleGroup: 'Empty',
-  type: 'Empty',
-  equiptment: 'Empty',
-  diffuculty: 'Empty',
-},
-{
-  accountName: 'Dumbell Hammer Curls',
-  image: curl2,
-  muscleGroup: 'Bicpes',
-  type: 'Strength',
-  equiptment: 'Bumbells',
-  diffuculty: 'Beginner',
-}
-] */
 
-//what is shown on the webpage
-function Feed (){
+function Explore (){
   const [state, setState] = useState([]);
-
+  const [users, setUsers] = useState(true);
+  // change to false when we want to show a single selected
+  // user's workouts
   const [loading, setLoading] = useState(true);
-  const [searchResults, setResults] = useState([]);
 
-
-  /*useEffect(async () => {
+  useEffect(async () => {
     if(!loading) return;
     setLoading(false);
-    const posts = await API.get('/@me/exercises', createHeader(window.localStorage.getItem('jwt')));
+    const posts = await API.get('/users', createHeader(window.localStorage.getItem('jwt')));
     setState(posts.data);
-  });*/
-
+  });
 
   const displayResult = data => {
-    setResults(data);
+    setState(data);
   }
 
+  // TODO: write a method, here or in UserInfo,
+  // that will detect a click on a UserInfo component
+  // and modify the content of this page so that users=false
+  // and it shows all the posts of the selected user (using the id component)
+  // rather than a list of all users/ a list of all users matching the search query
+
   return (
-	  <div>
-	  <ExploreBar displayResult={displayResult}/>
-    {searchResults.map(result => (
-      <div key={result.id}>
-        <h1>{result.name}</h1>
-      </div>
-    ))}
+  <div>
+    <ExploreBar displayResult={displayResult}/>
 
     <div className="App">
-      {
+    {
         state.map(post => {
-          return <FeedPost
-            id={post.id}
-            name={post.name}
-            image={post.image}
-            likes={post.likes}
-            liked={post.liked}
-            likeable={true}
-            muscleGroup={post.muscleGroup}
-            type={post.type}
-            equipment={post.equipment}
-            difficulty={post.difficulty}
-            />
+          return <UserInfo id={post.id} name={post.username}/>
         })
-      }
+    }
     </div>
   </div>
   );
 }
 
-export default Feed;
+export default Explore;

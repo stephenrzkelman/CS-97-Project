@@ -9,7 +9,8 @@ import Calendar from './Calendar';
 import Logout from './Logout';
 import Signup from './Signup';
 import HomePage from './HomePage';
-
+import Explore from './Explore';
+import UserInfo from './UserInfo';
 export {
   WorkoutCreationForm,
   AuthForm,
@@ -18,8 +19,10 @@ export {
   Profile,
   HomePage,
   Feed,
+  Explore,
   Navigation,
   Calendar,
   Logout,
-  Signup
+  Signup,
+  UserInfo,
 }
