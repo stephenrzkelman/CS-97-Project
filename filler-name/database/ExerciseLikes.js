@@ -129,6 +129,21 @@ class ExerciseLike {
       });
     });
   }
+
+  delete() {
+    const sql = `DELETE FROM exercise_like
+      WHERE exercise_id = ?
+      AND user_id = ?`;
+    return new Promise((resolve, reject) => {
+      db.run(sql, [this.exercise.id, this.user.id], error => {
+        if(error) {
+          console.error(error);
+          reject(error);
+        }
+      });
+      resolve();
+    });
+  }
 }
 
 exports.ExerciseLike = ExerciseLike;

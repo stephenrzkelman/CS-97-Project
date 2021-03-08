@@ -46,9 +46,9 @@ if(users){console.log("users");
 		<div className="App">
 		{
 		   state.map(post => {
-		   return <UserInfo 
-			   displayResult={displayResult} 
-			   id={post.id} 
+		   return <UserInfo
+			   displayResult={displayResult}
+			   id={post.id}
 			   name={post.username}
 		  />
                   })
@@ -64,10 +64,12 @@ if(users){console.log("users");
 		<div className="App">
     		{
      		state.map(post => {
+					 console.log(post);
 		    return <FeedPost
-		    id={post.id}
-          	    name={post.name}
+		    			id={post.id}
+          	  name={post.name}
 	            image={post.image}
+							image2={post.image2}
 	            likes={post.likes}
 	            liked={post.liked}
 	            likeable={true}
@@ -75,6 +77,7 @@ if(users){console.log("users");
 	            type={post.type}
 	            equipment={post.equipment}
 	            difficulty={post.difficulty}
+							directions={post.description}
 	            />
 	    	})
     	  }

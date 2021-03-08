@@ -47,9 +47,11 @@ function Profile(props) {
           name={exercise.name}
           difficulty={exercise.difficulty}
           image={exercise.image}
+          image2={exercise.image2}
           type={exercise.type}
           muscleGroup={exercise.muscleGroup}
           equipment={exercise.equipment}
+          directions={exercise.description}
         />
       ))}
     </> :

@@ -15,30 +15,27 @@ function FeedPost(props) {
     const [image, setImage] = useState(props.image);
     const [image2, setImage2] = useState(props.image2);
 
-    
+
     useEffect(async () => {
         const bgim = (await import(`../assets/${props.image}`)).default;
+        const bgim2 = (await import(`../assets/${props.image2}`)).default;
         setImage(bgim);
+        setImage2(bgim2);
     });
-    
-    /*
-    const incrementLikeCount = async () => {
-        if(liked || !props.likeable) return;
-        setLiked(true);
-        setLikeCount(likeCount + 1);
-        const response = await API.put(`/exercises/${props.id}`, {}, createHeader(window.localStorage.getItem('jwt')));
-    }
-    */
 
-    const updateLikes = async (e) => 
+    const updateLikes = async (e) =>
     {
         if(!props.likeable) return;
+        const action = {
+            like: null
+        };
         if(liked)
         {
             e.target.setAttribute( 'src', 'https://vovochiquinha.files.wordpress.com/2015/05/amor-coracao.png?w=640');
             e.target.setAttribute('alt', 'filled like button');
             setLiked(false);
             setLikeCount(likeCount - 1);
+            action.like = false;
         }
         else
         {
@@ -46,8 +43,9 @@ function FeedPost(props) {
             e.target.setAttribute('alt', 'filled like button');
             setLiked(true);
             setLikeCount(likeCount + 1);
+            action.like = true;
         }
-        const response = await API.put(`/exercises/${props.id}`, {}, createHeader(window.localStorage.getItem('jwt')));
+        const response = await API.put(`/exercises/${props.id}`, action, createHeader(window.localStorage.getItem('jwt')));
     }
 
     return <div className="post">
@@ -70,7 +68,9 @@ function FeedPost(props) {
                 <div className="icons">
                     <img
                         className="heart"
-                        src="https://vovochiquinha.files.wordpress.com/2015/05/amor-coracao.png?w=640"
+                        src={props.liked ?
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png"
+                            : "https://vovochiquinha.files.wordpress.com/2015/05/amor-coracao.png?w=640"}
                         id="heart"
                         alt="like button"
                         onClick={updateLikes}

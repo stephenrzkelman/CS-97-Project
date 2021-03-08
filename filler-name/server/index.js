@@ -55,7 +55,7 @@ app.post('/explore', bodyParser.json(), async(req,res) => {
 });
 
 app.post('/user/exercises', bodyParser.json(), async (req, res) => {
-	return res.json(await Exercise.userall(req.body.keyword));
+	return res.json(await ExerciseLike.getUserFeed({id: req.body.id}));
 });
 
 app.get('/users/:userId/exercises', async (req, res) => {
@@ -115,13 +115,19 @@ app.get('/exercises/:exerciseId', async (req, res) => {
 
 app.put('/exercises/:exerciseId', async (req, res) => {
   const { exerciseId } = req.params;
+  const { like } = req.body;
   const obj = jwt.verify(req.jwt, JWT_SECRET);
   const user = new User(obj.username, obj.password, obj.email);
   user.id = obj.id;
   let exercise = await Exercise.find(exerciseId);
-
-  let execLike = await (new ExerciseLike(exercise, user)).save();
-  return res.json(await exercise.updateRating());
+  let execLike = new ExerciseLike(exercise, user);
+  if(like) {
+    await execLike.save();
+    return res.json(await exercise.updateRating());
+  } else {
+    await execLike.delete();
+    return res.json(await exercise.decreaseRating());
+  }
 });
 
 app.get('/exercises', async (req, res) => {
@@ -139,21 +145,31 @@ app.get('/@me/exercises', async (req, res) => {
 app.post('/upload', async (req, res) => {
   const form = new formidable.IncomingForm();
   form.parse(req, async (err, fields, files) => {
-    const newname = uuid() + '.' + files.image.name.split('.')[1]
+    if(err) console.error(err);
+    const newname = uuid() + '.' + files.image.name.split('.')[1];
+    const othernewname = uuid() + '.' + files.second_image.name.split('.')[1];
     const exercise = new Exercise(
       fields.name,
       newname,
+      othernewname,
       fields.muscleGroup,
       fields.type,
       fields.difficulty,
       fields.equipment,
+      fields.description,
       jwt.verify(req.jwt, JWT_SECRET)
     );
     await exercise.save();
     let oldpath = files.image.path;
+    let otheroldpath = files.second_image.path;
     let newpath = `${path.join(__dirname, '../src/assets')}/${newname}`;
+    let othernewpath = `${path.join(__dirname, '../src/assets')}/${othernewname}`;
     let rawdata = fs.readFileSync(oldpath);
     fs.writeFile(newpath, rawdata, err => {
+      if(err) console.error(err);
+    });
+    let rawdata_second = fs.readFileSync(otheroldpath);
+    fs.writeFile(othernewpath, rawdata_second, err => {
       if(err) console.error(err);
     });
   });

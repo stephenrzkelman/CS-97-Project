@@ -9,8 +9,10 @@ function UserInfo(props) {
    const handleClick = async event => {
 		event.preventDefault();
 		const { data } = await API.post('/user/exercises', {
-			keyword: props.id
-		}, createHeader(window.localStorage.getItem('jwt')));
+            id: props.id
+        }, createHeader(window.localStorage.getItem('jwt')));
+        console.log(data);
+        console.log('x');
 		props.displayResult(data, false);
 	}
 
