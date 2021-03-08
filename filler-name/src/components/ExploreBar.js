@@ -28,12 +28,12 @@ class ExploreBar extends React.Component {
 		}, createHeader(window.localStorage.getItem('jwt')));
 		this.props.displayResult(data, true);
 	}
-	async showAll(event){
+	showAll = async (event, props) => {
 		event.preventDefault();
 		const { data } = await API.post('/explore', {
-			keyword: this.state.value
+			keyword: ''
 		}, createHeader(window.localStorage.getItem('jwt')));
-		this.props.displayResult(data,true);
+		this.props.displayResult(data, true);
 	}
 
   render(){
@@ -49,7 +49,7 @@ class ExploreBar extends React.Component {
       <input type="submit"
 	value="Search" />
      </form>
-     <form onSubmit = {this.showAll}>
+     <form displayResults={this.props.displayResult} onSubmit = {this.showAll}>
 	    <input type="submit"
 	    value = "All Users"/>
      </form>
