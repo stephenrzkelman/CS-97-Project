@@ -1,8 +1,8 @@
 # Egg-cercise Database
 ## Contributors 
-Jaden Booher
-Stephen Kelman
-Paul Sera
+Jaden Booher  
+Stephen Kelman  
+Paul Sera  
 Adrian
 
 ## How to start the website
