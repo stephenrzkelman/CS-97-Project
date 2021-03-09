@@ -117,6 +117,7 @@ class ExerciseLike {
       AND user_id = ?`;
     return new Promise((resolve, reject) => {
       db.all(sql, [user.id], (error, rows) => {
+        console.log(rows);
         if(error) {
           console.error(error);
           reject(error);
@@ -129,6 +130,32 @@ class ExerciseLike {
       });
     });
   }
+
+    /**
+   * #### exists here to avoid more circular dependency
+   * gets all exercises created by a given user including whether liked
+   * @param {User} user must include id
+   * @returns {Promise<Exercise[]}
+   */
+
+     static getUserWorkouts(user) {
+      const sql = `SELECT * FROM exercises
+        LEFT JOIN exercise_like ON exercise_like.exercise_id = exercises.id
+        AND user_id = ?`;
+      return new Promise((resolve, reject) => {
+        db.all(sql, [user.id], (error, rows) => {
+          if(error) {
+            console.error(error);
+            reject(error);
+          }
+          resolve(Promise.all(rows.filter(row => row.creator === user.id).map(async row => {
+            const exercise = await Exercise.find(row.id);
+            exercise.liked = Boolean(row.exercise_id);
+            return exercise;
+          })));
+        });
+      });
+    }
 
   delete() {
     const sql = `DELETE FROM exercise_like

@@ -78,7 +78,7 @@ function Feed () {
             type={post.type}
             equipment={post.equipment}
             difficulty={post.difficulty}
-            directions={post.directions}
+            directions={post.description}
             />
         })
       }

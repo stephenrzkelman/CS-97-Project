@@ -64,7 +64,6 @@ if(users){console.log("users");
 		<div className="App">
     		{
      		state.map(post => {
-					 console.log(post);
 		    return <FeedPost
 		    			id={post.id}
           	  name={post.name}

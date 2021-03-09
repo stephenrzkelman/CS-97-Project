@@ -55,7 +55,9 @@ app.post('/explore', bodyParser.json(), async(req,res) => {
 });
 
 app.post('/user/exercises', bodyParser.json(), async (req, res) => {
-	return res.json(await ExerciseLike.getUserFeed({id: req.body.id}));
+  const data = await ExerciseLike.getUserWorkouts({id: req.body.id});
+  console.log(data);
+	return res.json(data);
 });
 
 app.get('/users/:userId/exercises', async (req, res) => {
