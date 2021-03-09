@@ -188,10 +188,10 @@ class Exercise {
       WHERE name LIKE ? COLLATE NOCASE OR
             musclegroup LIKE ? COLLATE NOCASE OR
             type LIKE ? COLLATE NOCASE OR
-            equipment LIKE ? COLLATE NOCASE
+            equipment LIKE ? COLLATE NOCASE OR
             description LIKE ? COLLATE NOCASE`;
     return new Promise((resolve, reject) => {
-      db.all(sql, Array(4).fill(`%${query}%`), (error, rows) => {
+      db.all(sql, Array(5).fill(`%${query}%`), (error, rows) => {
       if(error) {
           console.error(error);
           reject(error);
