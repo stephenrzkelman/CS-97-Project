@@ -7,62 +7,91 @@ import {
     API,
     createHeader
 } from '../constants';
-import heart from '../assets/heart.png';
-import bookmark from '../assets/bookmark.png';
 
 function FeedPost(props) {
 
     const [likeCount, setLikeCount]= useState(props.likes);
-    const [image, setImage] = useState(null);
+    const [liked, setLiked] = useState(props.liked);
+    const [image, setImage] = useState(props.image);
+    const [image2, setImage2] = useState(props.image2);
+
 
     useEffect(async () => {
         const bgim = (await import(`../assets/${props.image}`)).default;
+        const bgim2 = (await import(`../assets/${props.image2}`)).default;
         setImage(bgim);
+        setImage2(bgim2);
     });
 
-    const incrementLikeCount = () => {
-        setLikeCount(likeCount + 1);
-        // call API endpoint to increment like count (there's a database method for it)
+    const updateLikes = async (e) =>
+    {
+        if(!props.likeable) return;
+        const action = {
+            like: null
+        };
+        if(liked)
+        {
+            e.target.setAttribute( 'src', 'https://vovochiquinha.files.wordpress.com/2015/05/amor-coracao.png?w=640');
+            e.target.setAttribute('alt', 'filled like button');
+            setLiked(false);
+            setLikeCount(likeCount - 1);
+            action.like = false;
+        }
+        else
+        {
+            e.target.setAttribute( 'src', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png');
+            e.target.setAttribute('alt', 'filled like button');
+            setLiked(true);
+            setLikeCount(likeCount + 1);
+            action.like = true;
+        }
+        const response = await API.put(`/exercises/${props.id}`, action, createHeader(window.localStorage.getItem('jwt')));
     }
 
     return <div className="post">
-        <div className="account-line">
-            <strong>{props.name}</strong>
-            <img
-            className="icon"
-            src={bookmark}
-            alt="bookmark"
-        />
+        <div className="post-name">
+            {props.name}
         </div>
 
+         <div className="grid">
 
-        <div className="icons">
-        <img
-            className="heart"
-            src={heart}
-            alt="like button"
-            onClick={incrementLikeCount}
-        />
-        {likeCount} likes
-        </div>
+            <img className="img1"
+                src={image == null ? "" : image}
+                alt="temp"
+            />
+            <img className="img2"
+                src={image == null ? "" : image2}
+                alt="temp"
+            />
 
-        <img
-            src={image == null ? "" : image}
-            alt="temp"
-        />
-
-        <div className="post-info">
-            <div><strong>Muscle Group: </strong>
-                {props.muscleGroup}
-            </div>
-            <div><strong>Type: </strong>
-                {props.type}
-            </div>
-            <div><strong>Equipment: </strong>
-                {props.equipment}
-            </div>
-            <div><strong>Difficulty: </strong>
-                <StarRating rating={props.difficulty} />
+            <div className="post-info">
+                <div className="icons">
+                    <img
+                        className="heart"
+                        src={props.liked ?
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png"
+                            : "https://vovochiquinha.files.wordpress.com/2015/05/amor-coracao.png?w=640"}
+                        id="heart"
+                        alt="like button"
+                        onClick={updateLikes}
+                    />
+                    {likeCount} likes
+                </div>
+                <div><strong>Muscle Group: </strong>
+                    {props.muscleGroup}
+                </div>
+                <div><strong>Type: </strong>
+                    {props.type}
+                </div>
+                <div><strong>Equipment: </strong>
+                    {props.equipment}
+                </div>
+                <div><strong>Difficulty: </strong>
+                    <StarRating rating={props.difficulty} />
+                </div>
+                <div><strong>Directions: </strong>
+                    {props.directions}
+                </div>
             </div>
         </div>
     </div>

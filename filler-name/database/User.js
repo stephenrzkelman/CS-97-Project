@@ -54,7 +54,7 @@ class User {
           reject(error);
         }
         resolve(rows.map(row => {
-          const exercise = new Exercise(row.name, row.image, row.muscleGroup, row.type, row.difficulty, row.equipment, row.creator);
+          const exercise = new Exercise(row.name, row.image, row.image2, row.muscleGroup, row.type, row.difficulty, row.equipment, row.description, row.creator);
           delete exercise.creator;
           exercise.id = row.id;
           exercise.likes = row.likes;
@@ -151,6 +151,32 @@ class User {
         resolve(users);
       });
     });
+  }
+
+ static search(query) {
+    const sql = `SELECT * FROM users
+      WHERE username LIKE ? COLLATE NOCASE`;
+    return new Promise((resolve, reject) => {
+      db.all(sql, [`%${query}%`], (error, rows) => {
+      if(error) {
+          console.error(error);
+          reject(error);
+        }
+        const { User } = require('./User');
+        const users = Promise.all(rows.map(async row => {
+          const user = new User(
+            row.username,
+            row.password,
+            row.email
+          );
+          user.id = row.id;
+          return user;
+        }));
+        resolve(users);
+      });
+
+    });
+
   }
 }
 

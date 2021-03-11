@@ -1,4 +1,7 @@
 import {
+  WorkoutCreationForm
+} from '.';
+import {
   useState,
   useEffect
 } from 'react';
@@ -7,7 +10,7 @@ import {
   createHeader
 } from '../constants';
 import {
-  FeedPost
+  FeedPost,
 } from '../components';
 
 function Profile(props) {
@@ -20,33 +23,35 @@ function Profile(props) {
 
   useEffect(async () => {
     if(!state.loading) return;
-    setState(prevState => ({
-      ...prevState,
-      loading: false
-    }));
-    const { data } = await API.get('/users', createHeader(props.jwt));
-    const exercises = (await API.get(`/users/${data[0].id}/exercises`, createHeader(props.jwt))).data;
-    setState(prevState => ({
-      ...prevState,
-      user: data[0],
+    const { data } = await API.get('/@me', createHeader(props.jwt));
+    const exercises = (await API.get(`/users/${data.id}/exercises`, createHeader(props.jwt))).data;
+    setState({
+      loading: false,
+      user: data,
       exercises: exercises
-    }));
+    });
   });
 
   return state.user != null ?
     <>
-      <h1>welcome {state.user.username}</h1>
+      <h1>Welcome {state.user.username}</h1>
+      <p> Create a new exercise:</p>
+      <WorkoutCreationForm jwt={window.localStorage.getItem('jwt')} />
+      <p> Your exercises: </p>
       {state.exercises.map(exercise => (
         <FeedPost
           key={exercise.id}
           id={exercise.id}
           likes={exercise.likes}
+          likeable={false}
           name={exercise.name}
           difficulty={exercise.difficulty}
           image={exercise.image}
+          image2={exercise.image2}
           type={exercise.type}
           muscleGroup={exercise.muscleGroup}
           equipment={exercise.equipment}
+          directions={exercise.description}
         />
       ))}
     </> :
