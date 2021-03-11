@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-cd filler-name/server && node index.js&
-cd filler-name && npm start;
+cd egg-cercise/server && node index.js&
+cd egg-cercise && npm start;
 
 wait
