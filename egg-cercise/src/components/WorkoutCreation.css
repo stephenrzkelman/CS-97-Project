@@ -1,3 +1,34 @@
 .workout-creation {
-  text-align: left;
+  text-align: justify;
+  padding: 12px;
+  columns: 450px;
+}
+
+.custom-field {
+  position: relative;
+  font-size: 14px; 
+}
+ 
+.custom-field input {
+  border: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: 12px;
+  border-radius: 5px;
+  width: 200px;
+  outline: none;
+  font-size: 14px;
+}
+ 
+ .custom-field .placeholder {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+ 
+.custom-field input:valid + .placeholder,
+.custom-field input:focus + .placeholder {
+  color: transparent;
 }

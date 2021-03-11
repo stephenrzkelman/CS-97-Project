@@ -34,10 +34,10 @@ function Profile(props) {
 
   return state.user != null ?
     <>
-      <h1>Welcome {state.user.username}</h1>
+      <h1>{state.user.username}'s Profile</h1>
       <p> Create a new exercise:</p>
       <WorkoutCreationForm jwt={window.localStorage.getItem('jwt')} />
-      <p> Your exercises: </p>
+      <h1> Your exercises: </h1>
       {state.exercises.map(exercise => (
         <FeedPost
           key={exercise.id}
