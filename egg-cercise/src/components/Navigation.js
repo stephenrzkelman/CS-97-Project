@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
 import './Navigation.css';
-
+import eggy from '../logo.png';
 function Navigation(props) {
     return (
         <nav>
-            <h3>Whatever logo here</h3>
+            <img src = {eggy} height="100px" width="100px"/>
             <ul className='nav-bar'>
                 <Link to='/home'>
                     <li>Home</li>
