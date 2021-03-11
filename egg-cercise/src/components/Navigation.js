@@ -5,6 +5,7 @@ function Navigation(props) {
     return (
         <nav>
             <img src = {eggy} height="100px" width="100px"/>
+            <h1 className="app-name" style={{display: 'inline'}}>Egg-cercise</h1>
             <ul className='nav-bar'>
                 <Link to='/home'>
                     <li>Home</li>
