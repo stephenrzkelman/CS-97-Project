@@ -16,3 +16,14 @@
   font-size: 30px;
   margin-left: 10%;
 }
+
+.custom-header {
+  padding: 10px;
+  text-align: center;
+  background: #b8bdbc;
+  color: white;
+  max-width: 500px;
+  margin-left: 35%;
+  border: 1px solid black;
+
+}

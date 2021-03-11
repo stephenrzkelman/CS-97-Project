@@ -16,7 +16,7 @@ function UserInfo(props) {
 		props.displayResult(data, false);
 	}
 
-    return <div className="post" onClick={handleClick}>
+    return <div className="custom-header" onClick={handleClick}>
             <strong>{props.name}</strong>
     </div>
 }
