@@ -41,7 +41,6 @@ function WorkoutCreationForm(props) {
 
   const handleImageChange = async event => {
     event.preventDefault();
-    console.log(state);
     const { id, files } = event.target;
     setState(prevState => ({
       ...prevState,
@@ -59,9 +58,9 @@ function WorkoutCreationForm(props) {
       <label style={inputStyle} htmlFor="name">Name:</label>
       <input style={inputStyle} type="text" id="name" placeholder="Enter Workout Name" value={state.name} onChange={handleChange} />
       <label style={inputStyle} htmlFor="image">Image:</label>
-      <input style={inputStyle} type="file" id="image" placeholder="Workout Image" onChange={handleImageChange} />
+      <input style={inputStyle} type="file" id="image" placeholder="Workout Image" required onChange={handleImageChange} />
       <label style={inputStyle} htmlFor="second_image">Image:</label>
-      <input style={inputStyle} type="file" id="second_image" placeholder="Another Workout Image" onChange={handleImageChange} />
+      <input style={inputStyle} type="file" id="second_image" placeholder="Another Workout Image" required onChange={handleImageChange} />
       <label style={inputStyle} htmlFor="muscleGroup">Muscle Group:</label>
       <input style={inputStyle} type="text" id="muscleGroup" placeholder="Muscle Group Used" value={state.muscleGroup} onChange={handleChange} />
       <label style={inputStyle} htmlFor="type">Type:</label>
