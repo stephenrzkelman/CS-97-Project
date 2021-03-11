@@ -2,21 +2,25 @@
 ## Contributors 
 Jaden Booher  
 Stephen Kelman  
-Paul Sera  
-Adrian
+Paul Serafimescu  
+Adrian Hung
+
 
 ## How to start the website
 1. Run the following in a terminal of your choice
 ### git clone (currect repository url)
 
-2. Cd into the 'server' repo located at (project name)/filler-name/server
-### cd projname/filler-name/server/
+2. Cd into the 'egg-cercise' repo and install node_modules
+### npm install
 
-3. Start node.js
+3. Cd into the 'server' repo located at /egg-cercise/server
+### cd projname/egg-cercise/
+
+4. Start node.js
 ### node index.js
 
-4. Cd into the 'filler-name' repo located at (project name)/filler-name
-### cd projname/filler-name/
+5. Cd into the 'egg-cercise' repo located at /egg-cercise
+### cd projname/egg-cercise/
 
-5. Start up react
+6. Start up react
 ### npm start
