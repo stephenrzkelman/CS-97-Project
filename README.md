@@ -30,14 +30,13 @@ or
 `cd CS-97-Project/egg-cercise/`
 (Note: you may have to do this from a different terminal)
 
-### 7. Start up react
+### 7. Start up react<sup>[1]</sup>
 `npm start`
 (it may tell you that the server is running on port 3000 and ask if you want to run the app on another port. In this case, just type "y")
 
-### 8. By default, "localhost:3001" should open up in your default
-   browser. Take a look around at our app!
+### 8. By default, "localhost:3001" should open up in your default browser. Take a look around at our app!
 
-## If you have problems with npm start
+## [1] If you have problems with npm start
 If your project is starting and directly sends you to 
 "localhost:3000" instad of "localhost:3001", run this command before trying step 7 again:
 `export PORT=3001`
