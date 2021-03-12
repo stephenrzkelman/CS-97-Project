@@ -41,6 +41,7 @@ function WorkoutCreationForm(props) {
 
   const handleImageChange = async event => {
     event.preventDefault();
+    console.log(state);
     const { id, files } = event.target;
     setState(prevState => ({
       ...prevState,
@@ -50,30 +51,60 @@ function WorkoutCreationForm(props) {
 
   const inputStyle = {
     display: 'block',
-    padding: '10px'
+    padding: '15px'
   };
 
-  return (
-    <form className="workout-creation">
+
+
+return (
+  <form className="workout-creation">
+    <div className="column">
       <label style={inputStyle} htmlFor="name">Name:</label>
-      <input style={inputStyle} type="text" id="name" placeholder="Enter Workout Name" value={state.name} onChange={handleChange} />
-      <label style={inputStyle} htmlFor="image">Image:</label>
-      <input style={inputStyle} type="file" id="image" placeholder="Workout Image" required onChange={handleImageChange} />
-      <label style={inputStyle} htmlFor="second_image">Image:</label>
-      <input style={inputStyle} type="file" id="second_image" placeholder="Another Workout Image" required onChange={handleImageChange} />
+      <label className="custom-field">
+        <input type="text" required id = "name" value={state.name} onChange={handleChange}/>
+        <span className="placeholder">Enter Workout Name</span>
+      </label>
+
       <label style={inputStyle} htmlFor="muscleGroup">Muscle Group:</label>
-      <input style={inputStyle} type="text" id="muscleGroup" placeholder="Muscle Group Used" value={state.muscleGroup} onChange={handleChange} />
+      <label className="custom-field">
+        <input type="text" required id = "muscleGroup" value={state.muscleGroup} onChange={handleChange}/>
+        <span className="placeholder">Enter Muscle Group</span>
+      </label>
+
       <label style={inputStyle} htmlFor="type">Type:</label>
-      <input style={inputStyle} type="text" id="type" placeholder="Type of Exercise" value={state.type} onChange={handleChange} />
+      <label className="custom-field">
+        <input type="text" required id = "type" value={state.type} onChange={handleChange}/>
+        <span className="placeholder">Type of Exercise</span>
+      </label>
+    </div>
+    <div className="column">
       <label style={inputStyle} htmlFor="muscleGroup">Difficulty:</label>
-      <input style={inputStyle} type="text" id="difficulty" placeholder="Difficulty (1-5)" value={state.difficulty} onChange={handleChange} />
+      <label className="custom-field">
+        <input type="text" required id = "difficulty" value={state.difficulty} onChange={handleChange}/>
+        <span className="placeholder">Difficulty (1-5)</span>
+      </label>
+
       <label style={inputStyle} htmlFor="muscleGroup">Equipment:</label>
-      <input style={inputStyle} type="text" id="equipment" placeholder="Equipment Required" value={state.equipment} onChange={handleChange} />
+      <label className="custom-field">
+        <input type="text" required id = "equipment" value={state.equipment} onChange={handleChange}/>
+        <span className="placeholder">Equipment Required</span>
+      </label>
+
       <label style={inputStyle} htmlFor="description">Description:</label>
-      <textarea style={inputStyle} id="description" placeholder="Describe Your Workout" value={state.description} onChange={handleChange} />
+      <label className="custom-field">
+        <input type="text" required id = "description" value={state.description} onChange={handleChange}/>
+        <span className="placeholder">Describe your workout</span>
+      </label>
+    </div>
+    <div className="column">
+      <label style={inputStyle} htmlFor="image">Image:</label>
+      <input type="file" required id="image" placeholder="Workout Image" onChange={handleImageChange} />
+      <label style={inputStyle} htmlFor="second_image">Image:</label>
+      <input type="file" required id="second_image" placeholder="Another Workout Image" onChange={handleImageChange} />
       <input style={inputStyle} type="submit" value="Create" onClick={handleSubmit} />
-    </form>
-  );
+    </div>
+  </form>
+);
 }
 
 export default WorkoutCreationForm;

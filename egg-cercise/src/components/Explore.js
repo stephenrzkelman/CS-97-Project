@@ -42,7 +42,7 @@ if(users){console.log("users");
           return(
 	     <div>
     		<ExploreBar displayResult={displayResult}/>
-	        <p>Select a user to view their workouts: </p>
+	        <h1>Select a user to view their workouts: </h1>
 		<div className="App">
 		{
 		   state.map(post => {
