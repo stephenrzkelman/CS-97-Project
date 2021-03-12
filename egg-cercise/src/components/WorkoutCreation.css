@@ -1,14 +1,23 @@
 .workout-creation {
   text-align: justify;
   padding: 12px;
-  columns: 450px;
+}
+
+.column {
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: top;
+}
+
+.column + .column {
+  margin-left: 250px;
 }
 
 .custom-field {
   position: relative;
-  font-size: 14px; 
+  font-size: 14px;
 }
- 
+
 .custom-field input {
   border: none;
   appearance: none;
@@ -19,7 +28,7 @@
   outline: none;
   font-size: 14px;
 }
- 
+
  .custom-field .placeholder {
   position: absolute;
   left: 12px;
@@ -27,7 +36,7 @@
   transform: translateY(-50%);
   color: #aaa;
 }
- 
+
 .custom-field input:valid + .placeholder,
 .custom-field input:focus + .placeholder {
   color: transparent;
