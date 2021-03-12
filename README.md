@@ -27,3 +27,11 @@ Adrian Hung
 
 7. Start up react
 ### npm start
+
+8. By default, "localhost:3001" should open up in your default
+   browser
+
+## If you have problems 
+If your project is starting and directly sends you to 
+"localhost:3000" instad of "localhost:3001", run this command:
+### export PORT=3001
