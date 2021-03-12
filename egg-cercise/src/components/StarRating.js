@@ -23,15 +23,6 @@ function StarRating(props) {
       props.onClick(c);
   }
 
-  const hover = event => {
-    event.target.parentElement.style.cursor = 'pointer';
-    const stars = rating.current.getElementsByClassName('star');
-    let value = event.target.dataset.value;
-    Array.from(stars).forEach(star => {
-      star.style.color = value >= star.dataset.value ? 'yellow' : 'gray'
-    });
-  }
-
   useEffect(setRating);
 
   return (
