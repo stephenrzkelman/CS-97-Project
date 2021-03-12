@@ -13,7 +13,7 @@ function UserInfo(props) {
         }, createHeader(window.localStorage.getItem('jwt')));
         console.log(data);
         console.log('x');
-		props.displayResult(data, false);
+		props.displayResult(data, false, props.name);
 	}
 
     return <div className="custom-header" onClick={handleClick}>

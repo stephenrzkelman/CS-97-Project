@@ -26,14 +26,14 @@ class ExploreBar extends React.Component {
 		const { data } = await API.post('/explore', {
 			keyword: this.state.value
 		}, createHeader(window.localStorage.getItem('jwt')));
-		this.props.displayResult(data, true);
+		this.props.displayResult(data, true, "");
 	}
 	showAll = async (event, props) => {
 		event.preventDefault();
 		const { data } = await API.post('/explore', {
 			keyword: ''
 		}, createHeader(window.localStorage.getItem('jwt')));
-		this.props.displayResult(data, true);
+		this.props.displayResult(data, true, "");
 	}
 
   render(){

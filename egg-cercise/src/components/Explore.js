@@ -19,7 +19,7 @@ function Explore (){
   // change to false when we want to show a single selected
   // user's workouts
   const [loading, setLoading] = useState(true);
-
+  const [username, setUsername] = useState("");
     useEffect(async () => {
     if(!loading) return;
     setLoading(false);
@@ -27,10 +27,11 @@ function Explore (){
     setState(posts.data);
   }, []);
 
-  const displayResult = (data, usertf) => {
+  const displayResult = (data, usertf, username) => {
      setLoading(true);
      setState(data);
      setUsers(usertf);
+     setUsername(username);
      setLoading(false);
   }
 if(loading){console.log("loading");
@@ -60,7 +61,7 @@ if(users){console.log("users");
   return (
 	  <div>
     		<ExploreBar displayResult={displayResult}/>
-
+		<h1>{username}'s profile:</h1>
 		<div className="App">
     		{
      		state.map(post => {
