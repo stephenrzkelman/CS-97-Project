@@ -28,7 +28,7 @@ function StarRating(props) {
   return (
     <div className="rating" ref={rating} data-rating={count} onMouseOut={setRating}>
       {[...Array(5).keys()].map(n =>
-        <span style={starStyle} className="star" key={n + 1} data-value={n + 1} onClick={handleClick} onMouseOver={hover}>
+        <span style={starStyle} className="star" key={n + 1} data-value={n + 1} onClick={handleClick}>
           &#9733;
         </span>
       )}
