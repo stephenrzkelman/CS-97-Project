@@ -8,19 +8,22 @@ Adrian Hung
 
 ## How to start the website
 1. Run the following in a terminal of your choice
-### git clone (currect repository url)
+### git clone https://github.com/stephenKaliman/CS-97-Project
 
 2. Cd into the 'egg-cercise' repo and install node_modules
+### cd projname/egg-cercise/
+
+3. Run npm install to install all the nodes for react
 ### npm install
 
-3. Cd into the 'server' repo located at /egg-cercise/server
-### cd projname/egg-cercise/
+4. Cd into the 'server' repo located at /egg-cercise/server
+### cd server/
 
-4. Start node.js
+5. Start node.js
 ### node index.js
 
-5. Cd into the 'egg-cercise' repo located at /egg-cercise
+6. Cd into the 'egg-cercise' repo located at /egg-cercise
 ### cd projname/egg-cercise/
 
-6. Start up react
+7. Start up react
 ### npm start
