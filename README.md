@@ -1,4 +1,4 @@
-# Egg-cercise Database
+# Egg-cercise
 ## Contributors 
 Jaden Booher  
 Stephen Kelman  
@@ -6,7 +6,7 @@ Paul Serafimescu
 Adrian Hung
 
 
-## How to start the website
+## How to get and start the app
 ### 1. Run the following in a terminal of your choice (if you have not already cloned the repo)
 `git clone https://github.com/stephenKaliman/CS-97-Project`
 
